@@ -13,7 +13,6 @@ export default function App() {
   async function onSubmit(payload) {
     setLoading(true);
     setError('');
-    setResult(null);
     try {
       const data = await runBacktest(payload);
       setResult(data);
@@ -25,11 +24,10 @@ export default function App() {
   }
 
   return (
-    <main className="app">
+    <main style={{ maxWidth: 960, margin: '0 auto', padding: 16 }}>
       <h1>quantlite</h1>
-      <p className="subtle">Minimal deterministic backtesting UI (Phase 1)</p>
       <InputForm onSubmit={onSubmit} loading={loading} />
-      {error && <p className="error">{error}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <MetricsPanel metrics={result?.metrics} />
       <ChartView equityCurve={result?.equity_curve} />
       <TradesTable trades={result?.trades} />

@@ -1,27 +1,16 @@
-function formatMetric(name, value) {
-  if (!Number.isFinite(value)) return String(value);
-  if (name.includes('rate') || name.includes('return') || name.includes('drawdown') || name === 'cagr') {
-    return `${(value * 100).toFixed(2)}%`;
-  }
-  return value.toFixed(4);
-}
-
 export default function MetricsPanel({ metrics }) {
+  if (!metrics) return <p>No metrics</p>;
   return (
-    <section className="card">
-      <h2>Metrics</h2>
-      {!metrics ? (
-        <p className="muted">No metrics yet.</p>
-      ) : (
-        <div className="metrics">
-          {Object.entries(metrics).map(([k, v]) => (
-            <div key={k} className="metric">
-              <div className="name">{k.replaceAll('_', ' ')}</div>
-              <div className="value">{formatMetric(k, v)}</div>
-            </div>
-          ))}
-        </div>
-      )}
-    </section>
+    <div>
+      <h3>Metrics</h3>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(120px,1fr))', gap: 8 }}>
+        {Object.entries(metrics).map(([k, v]) => (
+          <div key={k} style={{ border: '1px solid #ddd', padding: 8 }}>
+            <strong>{k}</strong>
+            <div>{Number.isFinite(v) ? v.toFixed(4) : String(v)}</div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

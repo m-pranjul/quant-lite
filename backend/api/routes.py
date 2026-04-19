@@ -3,7 +3,7 @@
 from fastapi import APIRouter, HTTPException
 
 from backend.api.schemas import BacktestRequest, BacktestResponse
-from backend.data.fetch import DataFetchError, fetch_ohlcv
+from backend.data.fetch import fetch_ohlcv
 from backend.data.preprocess import preprocess_data
 from backend.engine.backtester import run_backtest
 from backend.strategies.buy_and_hold import BuyAndHoldStrategy
@@ -42,9 +42,7 @@ def backtest(payload: BacktestRequest):
             slippage=payload.slippage,
         )
         return result
-    except DataFetchError as exc:
-        raise HTTPException(status_code=400, detail=f"data provider error: {exc}") from exc
     except ValueError as exc:
-        raise HTTPException(status_code=400, detail=f"data processing error: {exc}") from exc
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
     except Exception as exc:  # unexpected data provider issues etc.
         raise HTTPException(status_code=500, detail=f"internal error: {exc}") from exc
