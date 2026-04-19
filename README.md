@@ -5,8 +5,6 @@ Deterministic minimal backtesting web app (Phase 1).
 ## Backend
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ./run.sh
 ```
@@ -30,13 +28,7 @@ Response fields: `equity_curve`, `trades`, `metrics`.
 
 ## Frontend
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-The frontend calls `http://localhost:8000/backtest`.
+Minimal React app in `frontend/src` that calls backend `/backtest` and renders form + results.
 
 ## Tests
 
